@@ -63,7 +63,7 @@ with st.form(key='gear_range_form'):
                     min_value=500, max_value=800, value=700, step=1)
 
     tyre_offset = d.slider(label='Tyre offset [mm]',
-                           help='The tyre makes the actual diameter of the wheel bigger. We need to account for that.'
+                           help='The tyre makes the actual diameter of the wheel bigger. We need to account for that.',
                            min_value=5, max_value=50, value=20, step=1)
 
     rpms = e.select_slider(label='Cadence range [rpm]',
