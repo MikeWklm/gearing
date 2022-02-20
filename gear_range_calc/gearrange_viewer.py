@@ -54,7 +54,7 @@ def plot_configs() -> None:
             dt['rpms']), use_container_width=True)
 
 
-st.subheader(f'Configure your Drivetrains.')
+st.subheader(f'Configure your Drivetrains:')
 # get inputs inside a form (batch input)
 with st.form(key='gear_range_form'):
     name = st.text_input(label='Configuration Name',
