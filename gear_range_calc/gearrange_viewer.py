@@ -22,7 +22,7 @@ def remove_drivetrain(to_exclude: List[str]) -> None:
         
 @st.cache
 def get_current_rawdata(cache: Dict[str, Dict[str, Any]]) -> 'path_or_buf':
-    """Utiltily function to get the current used rawdata."""
+    """Utility function to get the current used rawdata."""
     all_drivetrains = list()
     for name, dt in cache.items():
         df_dt = dt['drivetrain'].speed(dt['rpms'])

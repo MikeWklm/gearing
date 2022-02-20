@@ -35,9 +35,9 @@ class Chainring:
         self.n_by = len(self.cogs)
 
     def __mul__(self, other: Casette) -> pd.DataFrame:
-        """Multiply behavior for Chainringe.
+        """Multiply behavior for chainring.
         
-        Should only wirk with a Casette and gives
+        Should only work with a Casette and gives
         the ratios of all possible combinations.
 
         Args:
@@ -68,7 +68,7 @@ class Wheel:
     perimeter: float = field(init=False)
 
     def __post_init__(self, tyre_offset):
-        """Calculate real diamater with tyre offset and perimeter.
+        """Calculate real diameter with tyre offset and perimeter.
 
         Args:
             tyre_offset (float): the tyre offset
@@ -118,7 +118,7 @@ class Drivetrain:
 
         Args:
             rpm (Union[int, Tuple[int, int]]): rpm, if tuple a range of lower,
-            middle (autocalc) and upper is calulated
+            middle (autocalc) and upper is calculated
 
         Returns:
             pd.DataFrame: result DataFrame
