@@ -17,11 +17,14 @@ if 'drivetrains' not in st.session_state:
     st.session_state.drivetrains = dict()
 
 # setup util function
+
+
 def remove_drivetrain(to_exclude: List[str]) -> None:
     """Utility function to remove a drivetrain from session."""
     for dt in to_exclude:
         del st.session_state.drivetrains[dt]
-        
+
+
 @st.cache
 def get_current_rawdata(cache: Dict[str, Dict[str, Any]]) -> 'path_or_buf':
     """Utility function to get the current used rawdata."""
@@ -41,9 +44,13 @@ def plot_configs() -> None:
         lower, upper = dt['rpms']
         drivetrain: Drivetrain = dt['drivetrain']
         st.subheader(f'Gear Range for {n}')
-        st.markdown(f' RPM Range [{lower}, {upper}], Wheel Diameter: {drivetrain.wheel.diameter:.0f} mm')
+        cogs = ', '.join([str(cog) for cog in drivetrain.casette.cogs])
+        st.markdown(f' RPM Range [{lower}, {upper}], '
+                    f'Wheel Diameter: {drivetrain.wheel.diameter:.0f} mm, '
+                    f'Casette: [{cogs}]')
         st.plotly_chart(drivetrain.plot_gear_range(
             dt['rpms']), use_container_width=True)
+
 
 st.subheader(f'Configure your Drivetrains.')
 # get inputs inside a form (batch input)
@@ -56,12 +63,11 @@ with st.form(key='gear_range_form'):
     chainring = a.multiselect(label='Chainring Range',
                               options=list(range(24, 52)),
                               default=[40])
-    casette_preconf = b.select(label='Preconfigured Casette',
-                                    options=ALL_OPTIONS_NAMES,
-                                    default='CUSTOM')
-    casette_cstm = c.multiselect(label='Custom Casette Range',
-                            options=list(range(9, 50)),
-                            default=[10, 11, 12, 13, 14, 15, 17, 19, 22, 26, 32, 38, 44])
+    casette_preconf = b.selectbox(label='Preconfigured Casette',
+                                  options=ALL_OPTIONS_NAMES,)
+    casette_cstm = c.multiselect(label='Custom Casette',
+                                 options=list(range(9, 50)),
+                                 default=[10, 11, 12, 13, 14, 15, 17, 19, 22, 26, 32, 38, 44])
 
     d, e, f = st.columns(3)
     tyre = d.slider(label='Rim Diameter [mm]',
@@ -74,7 +80,7 @@ with st.form(key='gear_range_form'):
     rpms = f.select_slider(label='Cadence Range [rpm]',
                            options=list(range(60, 120)),
                            value=(85, 95))
-    add = st.form_submit_button('Add Configuration')    
+    add = st.form_submit_button('Add Configuration')
 
 if add:
     # construct the drivetrain
@@ -96,18 +102,18 @@ st.subheader('Your current Drivetrains:')
 with st.form(key='update_config'):
     current_configs = [k for k, v in st.session_state.drivetrains.items()]
     to_keep = st.multiselect(label='Drivetrains to keep',
-                                options=current_configs,
-                                default=current_configs)
+                             options=current_configs,
+                             default=current_configs)
     update = st.form_submit_button('Update Drivetrains')
 
 # update drivetrains
 if update:
     remove_drivetrain(set(current_configs) - set(to_keep))
-    
+
 st.subheader('Drivetrain Plots:')
 with st.expander('Calculate the Plots for all Drivetrains.'):
     # plot the drivetrains
     plot_configs()
 
-st.download_button('Download Data.', get_current_rawdata(st.session_state.drivetrains), 
+st.download_button('Download Data.', get_current_rawdata(st.session_state.drivetrains),
                    file_name='gear-range-calculator-data.csv', mime='text/csv')
