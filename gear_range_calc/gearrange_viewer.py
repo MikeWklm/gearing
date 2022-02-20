@@ -44,10 +44,12 @@ def plot_configs() -> None:
         lower, upper = dt['rpms']
         drivetrain: Drivetrain = dt['drivetrain']
         st.subheader(f'Gear Range for {n}')
-        cogs = ', '.join([str(cog) for cog in drivetrain.casette.cogs])
-        st.markdown(f' RPM Range [{lower}, {upper}], '
-                    f'Wheel Diameter: {drivetrain.wheel.diameter:.0f} mm, '
-                    f'Casette: [{cogs}]')
+        chainring_cogs = ', '.join([str(cog) for cog in drivetrain.chainring.cogs])
+        casette_cogs = ', '.join([str(cog) for cog in drivetrain.casette.cogs])
+        st.markdown(f' RPM Range [{lower}, {upper}] | '
+                    f'Wheel Diameter: {drivetrain.wheel.diameter:.0f} mm | '
+                    f'Chainring: [{chainring_cogs}] | '
+                    f'Casette: [{casette_cogs}]')
         st.plotly_chart(drivetrain.plot_gear_range(
             dt['rpms']), use_container_width=True)
 
