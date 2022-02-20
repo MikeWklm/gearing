@@ -15,6 +15,8 @@ run_gearrange_frontend
 ```
 ### Web App
 This tiny application is also deployed on streamlit where it can be used:
+
+https://share.streamlit.io/mikewklm/gearing/gear_range_calc/gearrange_viewer.py
 ## Application Example
 This is how the streamlit applications looks like:
 ![App 1](gearrange-1.png)
