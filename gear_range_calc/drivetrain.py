@@ -1,4 +1,4 @@
-"""Construct a Bike Drivetrain which some plotting utils."""
+"""Construct a Bike Drivetrain with some plotting utils."""
 import math
 from dataclasses import InitVar, dataclass, field
 from functools import cached_property
