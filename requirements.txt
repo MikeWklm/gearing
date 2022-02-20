@@ -1,0 +1,4 @@
+# for streamlit deployment from repo
+pandas
+plotly
+streamlit
