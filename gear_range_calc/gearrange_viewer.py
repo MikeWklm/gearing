@@ -39,7 +39,7 @@ def plot_configs() -> None:
         lower, upper = dt['rpms']
         drivetrain: Drivetrain = dt['drivetrain']
         st.subheader(f'Gear Range for {n}')
-        st.markdown(f' RPM Range [{lower}, {upper}], Tyre Diameter: {drivetrain.wheel.diameter:.0f} mm')
+        st.markdown(f' RPM Range [{lower}, {upper}], Wheel Diameter: {drivetrain.wheel.diameter:.0f} mm')
         st.plotly_chart(drivetrain.plot_gear_range(
             dt['rpms']), use_container_width=True)
 
@@ -51,21 +51,22 @@ with st.form(key='gear_range_form'):
                          max_chars=100)
 
     a, b = st.columns([1, 3])
-    chainring = a.multiselect(label='Select the range of the chainring.',
+    chainring = a.multiselect(label='Chainring range',
                               options=list(range(24, 52)),
                               default=[40])
-    casette = b.multiselect(label='Select the range of the casette.',
+    casette = b.multiselect(label='Casette range',
                             options=list(range(9, 50)),
                             default=[10, 11, 12, 13, 14, 15, 17, 19, 22, 26, 32, 38, 44])
 
     c, d, e = st.columns(3)
-    tyre = c.slider(label='Tyre diameter in mm.',
+    tyre = c.slider(label='Rim diameter [mm]',
                     min_value=500, max_value=800, value=700, step=1)
 
-    tyre_offset = d.slider(label='Tyre offset on rim in mm.',
+    tyre_offset = d.slider(label='Tyre offset [mm]',
+                           help='The tyre makes the actual diameter of the wheel bigger. We need to account for that.'
                            min_value=5, max_value=50, value=20, step=1)
 
-    rpms = e.select_slider(label='Select a cadence range in rpm.',
+    rpms = e.select_slider(label='Cadence range [rpm]',
                            options=list(range(60, 120)),
                            value=(85, 95))
     add = st.form_submit_button('Add Configuration')    
@@ -85,10 +86,10 @@ st.subheader('Your current Drivetrains:')
 # allow user to delete drivetrains
 with st.form(key='update_config'):
     current_configs = [k for k, v in st.session_state.drivetrains.items()]
-    to_keep = st.multiselect(label='Select Configurations to keep',
+    to_keep = st.multiselect(label='Drivetrains to keep',
                                 options=current_configs,
                                 default=current_configs)
-    update = st.form_submit_button('Update Configurations')
+    update = st.form_submit_button('Update Drivetrains')
 
 # update drivetrains
 if update:
