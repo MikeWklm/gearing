@@ -85,7 +85,7 @@ st.subheader('Your current Drivetrains:')
 # allow user to delete drivetrains
 with st.form(key='update_config'):
     current_configs = [k for k, v in st.session_state.drivetrains.items()]
-    to_keep = st.multiselect(label='Select Configurations to delete',
+    to_keep = st.multiselect(label='Select Configurations to keep',
                                 options=current_configs,
                                 default=current_configs)
     update = st.form_submit_button('Update Configurations')
