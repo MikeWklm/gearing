@@ -10,7 +10,7 @@ from preconfigs import ALL_OPTIONS, ALL_OPTIONS_NAMES
 
 st.set_page_config(layout="wide")
 
-st.title('Gear Range Calculator.')
+st.title('Bicycle Gear Range Calculator')
 
 # init a session state
 if 'drivetrains' not in st.session_state:
