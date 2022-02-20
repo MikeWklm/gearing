@@ -1,5 +1,5 @@
 # Gear Range Calculator
-This is a very simple streamlit application in order to compare different bycicle drivetrains by specifying:
+This is a very simple streamlit application in order to compare different bicycle drivetrains by specifying:
 * The front __chainring(s)__ by their number of cogs
 * The __cassette__ also by their number of cogs
 * The __wheel__ by its diamater and tyre offset
