@@ -1,10 +1,12 @@
 """Tiny Streamlit App for a Gear Calculation Frontend."""
+from email.policy import default
 from typing import Any, Dict, List
 
 import pandas as pd
 import streamlit as st
 
 from drivetrain import Casette, Chainring, Drivetrain, Wheel
+from preconfigs import ALL_OPTIONS, ALL_OPTIONS_NAMES
 
 st.set_page_config(layout="wide")
 
@@ -50,23 +52,26 @@ with st.form(key='gear_range_form'):
                          value=f'Configuration 1',
                          max_chars=100)
 
-    a, b = st.columns([1, 3])
+    a, b, c = st.columns([1, 1, 3])
     chainring = a.multiselect(label='Chainring Range',
                               options=list(range(24, 52)),
                               default=[40])
-    casette = b.multiselect(label='Casette Range',
+    casette_preconf = b.select(label='Preconfigured Casette',
+                                    options=ALL_OPTIONS_NAMES,
+                                    default='CUSTOM')
+    casette_cstm = c.multiselect(label='Custom Casette Range',
                             options=list(range(9, 50)),
                             default=[10, 11, 12, 13, 14, 15, 17, 19, 22, 26, 32, 38, 44])
 
-    c, d, e = st.columns(3)
-    tyre = c.slider(label='Rim Diameter [mm]',
+    d, e, f = st.columns(3)
+    tyre = d.slider(label='Rim Diameter [mm]',
                     min_value=500, max_value=800, value=700, step=1)
 
-    tyre_offset = d.slider(label='Tyre Offset [mm]',
+    tyre_offset = e.slider(label='Tyre Offset [mm]',
                            help='The tyre makes the actual diameter of the wheel bigger. We need to account for that.',
                            min_value=5, max_value=50, value=20, step=1)
 
-    rpms = e.select_slider(label='Cadence Range [rpm]',
+    rpms = f.select_slider(label='Cadence Range [rpm]',
                            options=list(range(60, 120)),
                            value=(85, 95))
     add = st.form_submit_button('Add Configuration')    
@@ -74,6 +79,10 @@ with st.form(key='gear_range_form'):
 if add:
     # construct the drivetrain
     chainring = Chainring(sorted(chainring))
+    if casette_preconf == 'CUSTOM':
+        casette = casette_cstm
+    else:
+        casette = ALL_OPTIONS[casette_preconf]
     casette = Casette(sorted(casette))
     wheel = Wheel(tyre, tyre_offset)
     drivetrain = Drivetrain(chainring, casette, wheel)
