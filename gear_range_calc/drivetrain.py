@@ -56,7 +56,7 @@ class Chainring:
                 ratios['ratio'].append(chain_cog / casette_cog)
         return pd.DataFrame(ratios)
 
-    def __rmul__(self, other):
+    def __rmul__(self, other) -> pd.DataFrame:
         return self.__mul__(other)
 
 
@@ -96,18 +96,18 @@ class Drivetrain:
         Returns:
             Drivetrain: Drivetrain instance
         """
-        chainring = Chainring(chainring)
-        casette = Casette(casette)
+        chainring = Chainring(sorted(chainring))
+        casette = Casette(sorted(casette))
         wheel = Wheel(wheel)
         return cls(chainring, casette, wheel)
 
     @cached_property
-    def ratio(self):
+    def ratio(self) -> pd.DataFrame:
         """Ratio for all chainring/cassette combinations."""
         return self.chainring * self.casette
 
     @cached_property
-    def unfolding(self):
+    def unfolding(self) -> pd.DataFrame:
         """unfolding in meters for all chainring/cassette combinations."""
         ratio = self.ratio
         ratio['unfolding'] = ratio['ratio'] * self.wheel.perimeter / 1000
