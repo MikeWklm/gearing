@@ -4,7 +4,7 @@ from typing import Any, Dict, List
 import pandas as pd
 import streamlit as st
 
-from .drivetrain import Casette, Chainring, Drivetrain, Wheel
+from drivetrain import Casette, Chainring, Drivetrain, Wheel
 
 st.set_page_config(layout="wide")
 
