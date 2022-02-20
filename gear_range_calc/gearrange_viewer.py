@@ -46,27 +46,27 @@ def plot_configs() -> None:
 st.subheader(f'Configure your Drivetrains.')
 # get inputs inside a form (batch input)
 with st.form(key='gear_range_form'):
-    name = st.text_input(label='Name of your configuration.',
+    name = st.text_input(label='Configuration Name',
                          value=f'Configuration 1',
                          max_chars=100)
 
     a, b = st.columns([1, 3])
-    chainring = a.multiselect(label='Chainring range',
+    chainring = a.multiselect(label='Chainring Range',
                               options=list(range(24, 52)),
                               default=[40])
-    casette = b.multiselect(label='Casette range',
+    casette = b.multiselect(label='Casette Range',
                             options=list(range(9, 50)),
                             default=[10, 11, 12, 13, 14, 15, 17, 19, 22, 26, 32, 38, 44])
 
     c, d, e = st.columns(3)
-    tyre = c.slider(label='Rim diameter [mm]',
+    tyre = c.slider(label='Rim Diameter [mm]',
                     min_value=500, max_value=800, value=700, step=1)
 
-    tyre_offset = d.slider(label='Tyre offset [mm]',
+    tyre_offset = d.slider(label='Tyre Offset [mm]',
                            help='The tyre makes the actual diameter of the wheel bigger. We need to account for that.',
                            min_value=5, max_value=50, value=20, step=1)
 
-    rpms = e.select_slider(label='Cadence range [rpm]',
+    rpms = e.select_slider(label='Cadence Range [rpm]',
                            options=list(range(60, 120)),
                            value=(85, 95))
     add = st.form_submit_button('Add Configuration')    
