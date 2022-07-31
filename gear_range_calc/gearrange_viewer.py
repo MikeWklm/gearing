@@ -63,7 +63,7 @@ with st.form(key='gear_range_form'):
 
     a, b, c = st.columns([1, 1, 3])
     chainring = a.multiselect(label='Chainring Range',
-                              options=list(range(24, 52)),
+                              options=list(range(24, 55)),
                               default=[40])
     casette_preconf = b.selectbox(label='Preconfigured Casette',
                                   options=ALL_OPTIONS_NAMES,)
